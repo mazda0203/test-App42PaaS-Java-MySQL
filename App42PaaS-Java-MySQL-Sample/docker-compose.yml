@@ -1,0 +1,25 @@
+services:
+  db:
+    image: mysql:5.6
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456QWErty
+      MYSQL_DATABASE: app42_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      app42.paas.db.username: test
+      app42.paas.db.password: 123456QWErty
+      app42.paas.db.ip: db
+      app42.paas.db.name: app42_db
+
+volumes:
+  mysql_data:
